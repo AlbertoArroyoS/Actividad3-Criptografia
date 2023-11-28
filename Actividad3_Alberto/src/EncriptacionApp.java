@@ -9,10 +9,15 @@ import java.util.Scanner;
 public class EncriptacionApp {
 
 	private static String mensajeCifrado;
-	private static byte[] bytesFraseCifrada; 
+	private static byte[] bytesFraseCifrada;
+	
+	//Para poder leer las opciones del menu	que estan en un metodo estatico
+	private static Scanner leer;
+	static {
+			leer = new Scanner(System.in);
+	}
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         
         try {
         	
@@ -22,21 +27,21 @@ public class EncriptacionApp {
         	//Objeto que nos permitira encriptar o desencriptar a partir de una
         	Cipher cifrador = Cipher.getInstance("AES");
         	
+        	boolean continuar = true;
         	
+	        while (continuar) {
+	
+	            int opcion = menu();
+	          //Si la opcion está fuera del rango de opciones se repetira el menu
+				while (opcion<1 || opcion>5){
+					opcion = menu();
+				}
 
-	        while (true) {
-	            System.out.println("Menú:");
-	            System.out.println("1. Encriptar frase");
-	            System.out.println("2. Desencriptar frase");
-	            System.out.println("3. Salir del programa");
-	
-	            int opcion = scanner.nextInt();
-	            scanner.nextLine(); // Consumir el salto de línea
-	
 	            switch (opcion) {
 	                case 1:
+	                	leer.nextLine(); // Limpiar el búfer de nueva línea
 	                    System.out.println("Ingrese la frase a encriptar:");
-	                    String fraseEncriptar = scanner.nextLine();
+	                    String fraseEncriptar = leer.nextLine();
 	                   // encriptarFrase(fraseEncriptar, cifrador);
 	                    //Ahora el cifrador lo configuramos para que use la clave simetrica
 	        			//para encriptar	                    
@@ -46,13 +51,14 @@ public class EncriptacionApp {
 	        			//Ciframos la frase
 	        			bytesFraseCifrada = cifrador.doFinal(bytesMensajeOriginal);
 	        			mensajeCifrado = new String(bytesFraseCifrada);
-	        			System.out.println(mensajeCifrado);
+	        			System.out.println("Frase encriptada: " + mensajeCifrado);
 	                    break;
 	
 	                case 2:
 	                    if (mensajeCifrado == null) {
 	                        System.out.println("No hay frase encriptada.");
 	                    } else {
+	                    	System.out.println("\nFrase encriptada: " + mensajeCifrado);
 	                    	cifrador.init(Cipher.DECRYPT_MODE, paloEspartano);
 	                    	byte[] bytesFraseDescifrada = cifrador.doFinal(bytesFraseCifrada);
 	                    	System.out.println("Frase Descifrada: " + new String(bytesFraseDescifrada));
@@ -61,10 +67,9 @@ public class EncriptacionApp {
 	
 	                case 3:
 	                    System.out.println("Saliendo del programa.");
-	                    System.exit(0);
+	                    //System.exit(0);
+	                    continuar=false;
 	
-	                default:
-	                    System.out.println("Opción no válida. Intente de nuevo.");
 	            }
 	        }
         }catch (GeneralSecurityException gse) {
@@ -73,24 +78,32 @@ public class EncriptacionApp {
 		}
     }
     
-    /*
+    private static int menu() {
+		int opcion = 0;
+		System.out.println("----------------------------------------------------");
+		System.out.println("|                      MENU                        |");
+		System.out.println("----------------------------------------------------");
+        System.out.println("1. Encriptar frase");
+        System.out.println("2. Desencriptar frase");
+        System.out.println("3. Salir del programa");
+		System.out.println("----------------------------------------------------");
+		System.out.println("Introduzca una opción del 1 al 2, si quiere salir 3");
+		System.out.println("----------------------------------------------------");
+		
+		try {
+			opcion = leer.nextInt();
+			
+		} catch (java.util.InputMismatchException e) {
+	        // Atrapar la excepción si se ingresa algo que no es un entero
+	        System.out.println("Entrada no válida. Ingrese un número entero.");
+	        leer.next(); // Limpiar el búfer de entrada para evitar un bucle infinito
+	    }
+		
+		if (opcion<1 || opcion > 3) {
+			System.out.println("OPCION INCORRECTA");
+		}
+		
+		return opcion;	
 
-    private static String encriptarFrase(String frase, Cipher cifrador) {
-        try {
-        	
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
-
-    private static String desencriptarFrase(Cipher cifrador) {
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }*/
 }
