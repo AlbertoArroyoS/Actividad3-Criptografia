@@ -3,7 +3,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 import java.security.GeneralSecurityException;
-import java.util.Base64;
 import java.util.Scanner;
 
 public class EncriptacionApp {
@@ -16,10 +15,23 @@ public class EncriptacionApp {
 	static {
 			leer = new Scanner(System.in);
 	}
+	
+	// Usuarios con nombre de usuario y contraseña hasheada
+    private static Usuario[] usuarios = {
+            new Usuario("usuario1", "contraseña1"),
+            new Usuario("usuario2", "contraseña2"),
+            new Usuario("usuario3", "contraseña3")
+    };
+    
+    private static Usuario usuarioAutenticado;
+	
 
     public static void main(String[] args) {
         
         try {
+        	
+        	// Autenticación de usuario
+            autenticarUsuario();
         	
         	KeyGenerator generador = KeyGenerator.getInstance("AES");
         	//Generamos la clave simetrica.
@@ -105,5 +117,41 @@ public class EncriptacionApp {
 		
 		return opcion;	
 
+    }
+    
+    private static void autenticarUsuario() {
+        int intentos = 0;
+
+        while (intentos < 3) {
+            System.out.println("Ingrese el nombre de usuario:");
+            String nombreUsuario = leer.next();
+            System.out.println("Ingrese la contraseña:");
+            String contraseña = leer.next();
+            //Llamo al metodo que autenticara el nombre de usuario y contraseña puestos
+            usuarioAutenticado = autenticar(nombreUsuario, contraseña);
+
+            if (usuarioAutenticado != null) {
+                System.out.println("Bienvenido, " + usuarioAutenticado.getNombreUsuario() + "!");
+            	//System.out.println("Bienvenido, " + usuarioAutenticado.getPasswordHasheada() + "!");
+                break;
+            } else {
+                System.out.println("Nombre de usuario o contraseña incorrectos. Intente de nuevo.");
+                intentos++;
+            }
+        }
+
+        if (usuarioAutenticado == null) {
+            System.out.println("Máximo de intentos alcanzado. Saliendo del programa.");
+            System.exit(0);
+        }
+    }
+
+    private static Usuario autenticar(String nombreUsuario, String contraseña) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombreUsuario().equals(nombreUsuario) && usuario.verificarPassword(contraseña)) {
+                return usuario;
+            }
+        }
+        return null;
     }
 }
