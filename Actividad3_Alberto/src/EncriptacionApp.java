@@ -135,8 +135,15 @@ public class EncriptacionApp {
             	//System.out.println("Bienvenido, " + usuarioAutenticado.getPasswordHasheada() + "!");
                 break;
             } else {
-                System.out.println("Nombre de usuario o contraseña incorrectos. Intente de nuevo.");
-                intentos++;
+            	intentos++;
+            	if (intentos<3) {
+            		System.out.println("Nombre de usuario o contraseña incorrectos. Intente de nuevo.");
+            	}else {
+            		System.out.println("Nombre de usuario o contraseña incorrectos.");
+
+            	}
+                
+                
             }
         }
 
