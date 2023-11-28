@@ -51,6 +51,7 @@ public class EncriptacionApp {
 
 	            switch (opcion) {
 	                case 1:
+	            
 	                	leer.nextLine(); // Limpiar el búfer de nueva línea
 	                    System.out.println("Ingrese la frase a encriptar:");
 	                    String fraseEncriptar = leer.nextLine();
@@ -64,9 +65,12 @@ public class EncriptacionApp {
 	        			bytesFraseCifrada = cifrador.doFinal(bytesMensajeOriginal);
 	        			mensajeCifrado = new String(bytesFraseCifrada);
 	        			System.out.println("Frase encriptada: " + mensajeCifrado);
+	        			
+	                	//encriptarFrase(cifrador, paloEspartano);
 	                    break;
 	
 	                case 2:
+	                	
 	                    if (mensajeCifrado == null) {
 	                        System.out.println("No hay frase encriptada.");
 	                    } else {
@@ -75,6 +79,8 @@ public class EncriptacionApp {
 	                    	byte[] bytesFraseDescifrada = cifrador.doFinal(bytesFraseCifrada);
 	                    	System.out.println("Frase Descifrada: " + new String(bytesFraseDescifrada));
 	                    }
+	                    
+	                   // desencriptarFrase(cifrador, paloEspartano,mensajeCifrado);
 	                    break;
 	
 	                case 3:
@@ -89,6 +95,32 @@ public class EncriptacionApp {
 			gse.printStackTrace();
 		}
     }
+    
+    /*
+    private static void encriptarFrase(Cipher cifrador, SecretKey paloEspartano) throws GeneralSecurityException {
+        leer.nextLine(); // Limpiar el búfer de nueva línea
+        System.out.println("Ingrese la frase a encriptar:");
+        String fraseEncriptar = leer.nextLine();
+
+        cifrador.init(Cipher.ENCRYPT_MODE, paloEspartano);
+        byte[] bytesMensajeOriginal = fraseEncriptar.getBytes();
+        byte[] bytesFraseCifrada = cifrador.doFinal(bytesMensajeOriginal);
+
+        String mensajeCifrado = new String(bytesFraseCifrada);
+        System.out.println("Frase encriptada: " + mensajeCifrado);
+    }
+    
+    private static void desencriptarFrase(Cipher cifrador, SecretKey paloEspartano, String mensajeCifrado) throws GeneralSecurityException {
+        if (mensajeCifrado == null) {
+            System.out.println("No hay frase encriptada.");
+        } else {
+        	System.out.println("\nFrase encriptada: " + mensajeCifrado);
+        	cifrador.init(Cipher.DECRYPT_MODE, paloEspartano);
+        	byte[] bytesFraseDescifrada = cifrador.doFinal(bytesFraseCifrada);
+        	System.out.println("Frase Descifrada: " + new String(bytesFraseDescifrada));
+        }
+    }*/
+    
     
     private static int menu() {
 		int opcion = 0;
