@@ -150,9 +150,9 @@ public class EncriptacionApp {
             System.out.println("Ingrese el nombre de usuario:");
             String nombreUsuario = leer.next();
             System.out.println("Ingrese la contraseña:");
-            String contraseña = leer.next();
+            String password = leer.next();
             //Llamo al metodo que autenticara el nombre de usuario y contraseña puestos
-            usuarioAutenticado = autenticar(nombreUsuario, contraseña);
+            usuarioAutenticado = autenticar(nombreUsuario, password);
 
             if (usuarioAutenticado != null) {
                 System.out.println("Bienvenido, " + usuarioAutenticado.getNombreUsuario() + "!");
@@ -182,12 +182,12 @@ public class EncriptacionApp {
      * con los nombres de usuario y contraseñas almacenados.
      *
      * @param nombreUsuario El nombre de usuario proporcionado por el usuario.
-     * @param contraseña    La contraseña proporcionada por el usuario.
+     * @param password    La contraseña proporcionada por el usuario.
      * @return El objeto Usuario autenticado o null si la autenticación falla.
      */
-    private static Usuario autenticar(String nombreUsuario, String contraseña) {
+    private static Usuario autenticar(String nombreUsuario, String password) {
         for (Usuario usuario : usuarios) {
-            if (usuario.getNombreUsuario().equals(nombreUsuario) && usuario.verificarPassword(contraseña)) {
+            if (usuario.getNombreUsuario().equals(nombreUsuario) && usuario.verificarPassword(password)) {
                 return usuario;
             }
         }
