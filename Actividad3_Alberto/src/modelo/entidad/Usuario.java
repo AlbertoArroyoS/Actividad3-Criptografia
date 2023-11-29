@@ -1,4 +1,4 @@
-package entidad;
+package modelo.entidad;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
