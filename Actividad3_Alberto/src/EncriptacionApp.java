@@ -1,13 +1,22 @@
+
 import javax.crypto.Cipher;
+
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
-
+/**
+ * Esta clase proporciona una aplicación de consola para encriptar y desencriptar frases utilizando AES.
+ * Utiliza una clave simétrica generada aleatoriamente para cifrar y descifrar las frases.
+ * La autenticación de usuario se realiza mediante nombre de usuario y contraseña.
+ * 
+ * @author Alberto Arroyo Santofimia
+ * @version 1.0
+ */
 public class EncriptacionApp {
 
-	private static String mensajeCifrado;
+	//private static String mensajeCifrado;
 	private static byte[] bytesFraseCifrada;
 	
 	//Para poder leer las opciones del menu	que estan en un metodo estatico
@@ -41,6 +50,8 @@ public class EncriptacionApp {
         	
         	boolean continuar = true;
         	
+        	String mensajeCifrado = null;
+        	
 	        while (continuar) {
 	
 	            int opcion = menu();
@@ -54,7 +65,7 @@ public class EncriptacionApp {
 	            
 	                	leer.nextLine(); // Limpiar el búfer de nueva línea
 	                    System.out.println("Ingrese la frase a encriptar:");
-	                    String fraseEncriptar = leer.nextLine();
+	                    String fraseEncriptar = leer.nextLine();      
 	                   // encriptarFrase(fraseEncriptar, cifrador);
 	                    //Ahora el cifrador lo configuramos para que use la clave simetrica
 	        			//para encriptar	                    
@@ -63,10 +74,8 @@ public class EncriptacionApp {
 	        			byte[] bytesMensajeOriginal = fraseEncriptar.getBytes();
 	        			//Ciframos la frase
 	        			bytesFraseCifrada = cifrador.doFinal(bytesMensajeOriginal);
-	        			mensajeCifrado = new String(bytesFraseCifrada);
+	    				mensajeCifrado = new String(bytesFraseCifrada);	        		
 	        			System.out.println("Frase encriptada: " + mensajeCifrado);
-	        			
-	                	//encriptarFrase(cifrador, paloEspartano);
 	                    break;
 	
 	                case 2:
@@ -77,10 +86,9 @@ public class EncriptacionApp {
 	                    	System.out.println("\nFrase encriptada: " + mensajeCifrado);
 	                    	cifrador.init(Cipher.DECRYPT_MODE, paloEspartano);
 	                    	byte[] bytesFraseDescifrada = cifrador.doFinal(bytesFraseCifrada);
+	                    	
 	                    	System.out.println("Frase Descifrada: " + new String(bytesFraseDescifrada));
 	                    }
-	                    
-	                   // desencriptarFrase(cifrador, paloEspartano,mensajeCifrado);
 	                    break;
 	
 	                case 3:
@@ -96,32 +104,12 @@ public class EncriptacionApp {
 		}
     }
     
-    /*
-    private static void encriptarFrase(Cipher cifrador, SecretKey paloEspartano) throws GeneralSecurityException {
-        leer.nextLine(); // Limpiar el búfer de nueva línea
-        System.out.println("Ingrese la frase a encriptar:");
-        String fraseEncriptar = leer.nextLine();
-
-        cifrador.init(Cipher.ENCRYPT_MODE, paloEspartano);
-        byte[] bytesMensajeOriginal = fraseEncriptar.getBytes();
-        byte[] bytesFraseCifrada = cifrador.doFinal(bytesMensajeOriginal);
-
-        String mensajeCifrado = new String(bytesFraseCifrada);
-        System.out.println("Frase encriptada: " + mensajeCifrado);
-    }
     
-    private static void desencriptarFrase(Cipher cifrador, SecretKey paloEspartano, String mensajeCifrado) throws GeneralSecurityException {
-        if (mensajeCifrado == null) {
-            System.out.println("No hay frase encriptada.");
-        } else {
-        	System.out.println("\nFrase encriptada: " + mensajeCifrado);
-        	cifrador.init(Cipher.DECRYPT_MODE, paloEspartano);
-        	byte[] bytesFraseDescifrada = cifrador.doFinal(bytesFraseCifrada);
-        	System.out.println("Frase Descifrada: " + new String(bytesFraseDescifrada));
-        }
-    }*/
-    
-    
+    /**
+     * Muestra un menú en la consola y lee la opción seleccionada por el usuario.
+     *
+     * @return La opción seleccionada por el usuario.
+     */
     private static int menu() {
 		int opcion = 0;
 		System.out.println("----------------------------------------------------");
@@ -151,6 +139,10 @@ public class EncriptacionApp {
 
     }
     
+    /**
+     * Realiza la autenticación del usuario solicitando nombre de usuario y contraseña.
+     * El usuario tiene tres intentos para proporcionar credenciales correctas.
+     */
     private static void autenticarUsuario() {
         int intentos = 0;
 
@@ -184,7 +176,15 @@ public class EncriptacionApp {
             System.exit(0);
         }
     }
-
+    
+    /**
+     * Autentica al usuario comparando el nombre de usuario y la contraseña proporcionados
+     * con los nombres de usuario y contraseñas almacenados.
+     *
+     * @param nombreUsuario El nombre de usuario proporcionado por el usuario.
+     * @param contraseña    La contraseña proporcionada por el usuario.
+     * @return El objeto Usuario autenticado o null si la autenticación falla.
+     */
     private static Usuario autenticar(String nombreUsuario, String contraseña) {
         for (Usuario usuario : usuarios) {
             if (usuario.getNombreUsuario().equals(nombreUsuario) && usuario.verificarPassword(contraseña)) {
@@ -193,4 +193,5 @@ public class EncriptacionApp {
         }
         return null;
     }
+    
 }

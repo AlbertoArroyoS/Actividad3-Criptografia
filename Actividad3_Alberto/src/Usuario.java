@@ -1,11 +1,22 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-
+/**
+ * La clase Usuario representa a un usuario con un nombre de usuario y una contraseña hasheada.
+ * Proporciona métodos para acceder al nombre de usuario y la contraseña hasheada,
+ * así como para verificar una contraseña ingresada mediante su hash.
+ */
 class Usuario {
     private String nombreUsuario;
     private String passwordHasheada;
-
+    
+    /**
+     * Constructor de la clase Usuario. La contraseña que se guardará en el objeto será en hash Base64, al pasarle
+     * el resultado del metodo hashearPassword(password)
+     * 
+     * @param nombreUsuario El nombre de usuario del usuario.
+     * @param password La contraseña del usuario (se almacena como hash).
+     */
     public Usuario(String nombreUsuario, String password) {
         this.nombreUsuario = nombreUsuario;
         this.passwordHasheada = hashearPassword(password);
@@ -20,11 +31,25 @@ class Usuario {
     }
     
     //Metodo que entra como argumento la contraseña normal, la hashea y la compara con la que tiene el objeto
+    
+    /**
+     * Verifica si la contraseña ingresada coincide con la contraseña almacenada en el objeto Usuario.
+     * La contraseña ingresada se hashea y luego se compara con la contraseña almacenada.
+     *
+     * @param password La contraseña ingresada por el usuario.
+     * @return true si la contraseña ingresada es correcta, false de lo contrario.
+     */
     public boolean verificarPassword(String password) {
     	// hashea la contraseña pasada por teclado y la compara con la que tiene el objeto
         return passwordHasheada.equals(hashearPassword(password));
     }
-
+    
+    /**
+     * Hashea una contraseña utilizando el algoritmo SHA-512 y lo convierte a Base64.
+     *
+     * @param password La contraseña a hashear.
+     * @return El hash de la contraseña en formato Base64.
+     */
     private String hashearPassword(String password) {
         //lógica para hashear la contraseña aquí (puede ser con MessageDigest y Base64)
     	byte[] passwordByte = password.getBytes();
@@ -44,8 +69,6 @@ class Usuario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
-		}
-
-    	
+		}    	
     }
 }
