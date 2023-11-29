@@ -6,6 +6,9 @@ import java.util.Base64;
  * La clase Usuario representa a un usuario con un nombre de usuario y una contraseña hasheada.
  * Proporciona métodos para acceder al nombre de usuario y la contraseña hasheada,
  * así como para verificar una contraseña ingresada mediante su hash.
+ * 
+ * @author Alberto Arroyo Santofimia
+ * @version 1.0
  */
 public class Usuario {
     private String nombreUsuario;
@@ -45,12 +48,13 @@ public class Usuario {
         return passwordHasheada.equals(hashearPassword(password));
     }
     
-    /**
-     * Hashea una contraseña utilizando el algoritmo SHA-512 y lo convierte a Base64.
-     *
-     * @param password La contraseña a hashear.
-     * @return El hash de la contraseña en formato Base64.
-     */
+    
+	/**
+	 * Hashea una contraseña utilizando el algoritmo SHA-512 y lo convierte a Base64.
+	 *
+	 * @param password La contraseña a hashear.
+	 * @return El hash de la contraseña en formato Base64.
+	 */
     private String hashearPassword(String password) {
         //lógica para hashear la contraseña aquí (puede ser con MessageDigest y Base64)
     	byte[] passwordByte = password.getBytes();
