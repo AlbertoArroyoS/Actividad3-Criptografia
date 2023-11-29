@@ -1,3 +1,4 @@
+package entidad;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -6,7 +7,7 @@ import java.util.Base64;
  * Proporciona métodos para acceder al nombre de usuario y la contraseña hasheada,
  * así como para verificar una contraseña ingresada mediante su hash.
  */
-class Usuario {
+public class Usuario {
     private String nombreUsuario;
     private String passwordHasheada;
     

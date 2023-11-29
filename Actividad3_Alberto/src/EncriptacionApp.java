@@ -4,6 +4,8 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import entidad.Usuario;
+
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
 /**
